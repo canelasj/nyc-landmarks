@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NYC Tour Guide Exam — Landmark Study</title>
+  <style>
+    :root{
+      --bg:#070b14; --card:#0e1630; --line:#223055; --text:#eaf0ff; --muted:#9bb0da; --accent:#00d4ff;
+      --chip:#0a1020; --ok:#2cffb3; --warn:#ffd166;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,#050812,var(--bg));
+      color:var(--text);
+    }
+    .wrap{max-width:820px;margin:0 auto;padding:14px 12px 100px}
+    header{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+    h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .sub{margin:4px 0 0;color:var(--muted);font-size:12px;line-height:1.35}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);
+      background:rgba(7,16,34,.7);padding:8px 10px;border-radius:999px;color:var(--muted);font-size:12px;
+      white-space:nowrap;
+    }
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media (min-width:860px){ .grid{grid-template-columns:330px 1fr} }
+    .card{
+      background:rgba(14,22,48,.95);border:1px solid var(--line);border-radius:18px;padding:12px;
+      box-shadow:0 12px 30px rgba(0,0,0,.35);
+    }
+    label{display:block;font-size:12px;color:var(--muted);margin:10px 2px 6px}
+    input, select{
+      width:100%;padding:12px 12px;border-radius:14px;border:1px solid var(--line);
+      background:#071022;color:var(--text);outline:none;font-size:15px;
+    }
+    input:focus, select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,212,255,.12)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    button{
+      cursor:pointer;border:1px solid var(--line);background:#071022;color:var(--text);
+      padding:10px 12px;border-radius:14px;font-weight:700;font-size:13px;
+    }
+    button.primary{border-color:rgba(0,212,255,.55);background:rgba(0,212,255,.10)}
+    button.alt{border-color:rgba(255,209,102,.55);background:rgba(255,209,102,.08)}
+    .list{display:grid;gap:8px;margin-top:10px}
+    .lmBtn{
+      width:100%;text-align:left;border-radius:16px;padding:12px;border:1px solid var(--line);
+      background:rgba(7,16,34,.55);color:var(--text);
+      display:flex;gap:10px;justify-content:space-between;align-items:flex-start;
+    }
+    .lmBtn:hover{filter:brightness(1.08)}
+    .lmTitle{margin:0;font-size:14px;line-height:1.2}
+    .lmMeta{margin-top:4px;color:var(--muted);font-size:12px;line-height:1.35}
+    .badge{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:5px 8px;border-radius:999px;background:rgba(10,16,32,.75)}
+    .empty{
+      padding:14px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px;
+    }
+
+    /* Detail */
+    .detailTitle{margin:0 0 4px;font-size:18px}
+    .detailMeta{color:var(--muted);font-size:12px;line-height:1.4}
+    .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+    .chip{
+      border:1px solid var(--line);background:var(--chip);padding:7px 10px;border-radius:999px;
+      font-size:12px;color:var(--muted);text-decoration:none;display:inline-flex;gap:6px;align-items:center;
+    }
+    .chip strong{color:var(--text)}
+    .sectionTitle{margin:14px 0 8px;font-size:13px;color:var(--muted);letter-spacing:.2px;text-transform:uppercase}
+    .facts{
+      border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(7,16,34,.55)
+    }
+    .facts ul{margin:8px 0 0;padding-left:18px}
+    .facts li{margin:6px 0;color:#dbe6ff;font-size:13px;line-height:1.45}
+    .qCard{
+      border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(7,16,34,.55);
+      display:grid;gap:10px;
+    }
+    .qRow{display:grid;gap:8px}
+    .qPrompt{font-size:13px;line-height:1.45;color:#dbe6ff}
+    .answer{
+      display:none;border:1px solid rgba(44,255,179,.25);background:rgba(44,255,179,.07);
+      border-radius:14px;padding:10px;color:#d7fff1;font-size:13px;line-height:1.45;
+    }
+    .muted{color:var(--muted)}
+    .stickyBar{
+      position:fixed;left:0;right:0;bottom:0;background:rgba(7,11,20,.88);border-top:1px solid var(--line);
+      backdrop-filter: blur(8px);padding:10px 12px;
+    }
+    .stickyInner{max-width:820px;margin:0 auto;display:flex;gap:10px;justify-content:space-between;align-items:center}
+    .small{font-size:12px;color:var(--muted)}
+    .k{color:var(--accent)}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>NYC Tour Guide Exam — Landmark Study</h1>
+      <p class="sub">
+        Tap a landmark → study quick facts → drill exam-style questions.
+        Use <span class="k">Quiz Mode</span> for random questions.
+      </p>
+    </div>
+    <span class="pill" id="countPill">0 landmarks</span>
+  </header>
+
+  <div class="grid">
+    <!-- LEFT: Landmark navigator -->
+    <div class="card">
+      <label for="q">Search (landmark / address / neighborhood / keyword)</label>
+      <input id="q" placeholder="Try: grand central, wall st, chelsea, 42nd..." />
+
+      <label for="group">Area Group</label>
+      <select id="group">
+        <option value="">All</option>
+        <option value="Midtown">Midtown</option>
+        <option value="Downtown">Downtown</option>
+      </select>
+
+      <label for="hood">Neighborhood</label>
+      <select id="hood">
+        <option value="">All</option>
+      </select>
+
+      <div class="actions">
+        <button class="primary" id="quizBtn">Quiz Mode</button>
+        <button id="clearBtn">Clear</button>
+      </div>
+
+      <div class="sectionTitle">Landmarks</div>
+      <div class="list" id="lmList"></div>
+    </div>
+
+    <!-- RIGHT: Detail / Quiz -->
+    <div class="card" id="rightPane">
+      <div class="empty">
+        Select a landmark on the left to view study facts and exam questions.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stickyBar">
+  <div class="stickyInner">
+    <div class="small" id="status">Tip: Add this page to your phone Home Screen for quick access.</div>
+    <div class="small">Search + Tap + Recall + Reveal</div>
+  </div>
+</div>
+
+<script>
+/**
+ * ✅ YOU EDIT HERE:
+ * Add landmarks + questions.
+ * The question styles match typical NYC guide-exam patterns:
+ * - What is it / where is it / why important
+ * - dates, architect/designer, style, purpose
+ * - nearby landmarks/streets/transit context
+ */
+const AREA_GROUPS = {
+  "Midtown": ["East Midtown", "Midtown", "Chelsea"],
+  "Downtown": ["East Village", "Financial District", "Tribeca"]
+};
+
+const LANDMARKS = [
+  {
+    id: "gct",
+    name: "Grand Central Terminal",
+    address: "89 E 42nd St, New York, NY 10017",
+    group: "Midtown",
+    neighborhood: "East Midtown",
+    keywords: ["train", "metro-north", "terminal", "42nd", "lexington"],
+    quickFacts: [
+      "Opened in 1913; major commuter rail terminal (Metro-North).",
+      "Main Concourse is famous for the constellation ceiling mural.",
+      "The Whispering Gallery is near the Oyster Bar arches."
+    ],
+    examQA: [
+      {
+        q: "Exam-style: What is Grand Central Terminal and why is it important?",
+        a: "A major NYC rail terminal (Metro-North) and iconic Beaux-Arts landmark in Midtown, known for its Main Concourse architecture and historic role connecting NYC to the Hudson Valley/Connecticut region."
+      },
+      {
+        q: "Exam-style: What year did Grand Central Terminal open?",
+        a: "1913."
+      },
+      {
+        q: "Exam-style: Name one famous feature inside Grand Central that tourists ask about.",
+        a: "Examples: the Main Concourse constellation ceiling or the Whispering Gallery."
+      }
+    ]
+  },
+  {
+    id: "chelsea_market",
+    name: "Chelsea Market",
+    address: "75 9th Ave, New York, NY 10011",
+    group: "Midtown",
+    neighborhood: "Chelsea",
+    keywords: ["food hall", "high line", "9th ave", "meatpacking"],
+    quickFacts: [
+      "Popular food hall and shopping space in Chelsea/Meatpacking area.",
+      "Excellent stop paired with the High Line for walking tours.",
+      "Great indoor option during rain/cold."
+    ],
+    examQA: [
+      {
+        q: "Exam-style: Where is Chelsea Market located and what is it known for?",
+        a: "It’s on 9th Avenue in Chelsea (near the High Line) and is known as a major food hall and shopping destination."
+      },
+      {
+        q: "Exam-style: What nearby attraction is commonly paired with Chelsea Market on a walking route?",
+        a: "The High Line."
+      },
+      {
+        q: "Exam-style: Give one practical tour-guide reason to include Chelsea Market.",
+        a: "It offers restrooms/food, works as a weather break, and keeps groups engaged with an easy nearby route."
+      }
+    ]
+  },
+  {
+    id: "nyse",
+    name: "New York Stock Exchange (NYSE)",
+    address: "11 Wall St, New York, NY 10005",
+    group: "Downtown",
+    neighborhood: "Financial District",
+    keywords: ["wall street", "finance", "fidi", "federal hall", "trinity church"],
+    quickFacts: [
+      "Major global stock exchange located on Wall Street in the Financial District.",
+      "Close to Federal Hall and Trinity Church—excellent cluster for a FiDi tour.",
+      "Exterior viewing is typical; security is tight around the building."
+    ],
+    examQA: [
+      {
+        q: "Exam-style: Where is the NYSE located and what is its significance?",
+        a: "It’s at 11 Wall Street in the Financial District and is a central institution in U.S. and global finance."
+      },
+      {
+        q: "Exam-style: Name two nearby FiDi landmarks you can point out from the NYSE area.",
+        a: "Examples: Federal Hall, Trinity Church, Wall Street, Charging Bull (nearby), or the Oculus (a short walk)."
+      },
+      {
+        q: "Exam-style: What’s a good safety/flow tip when guiding groups near Wall Street?",
+        a: "Keep the group to the side (not blocking sidewalks/entrances), avoid restricted areas, and expect heavy security presence."
+      }
+    ]
+  }
+];
+
+// ---------------- Utilities ----------------
+const $ = (id) => document.getElementById(id);
+const qEl = $("q");
+const groupEl = $("group");
+const hoodEl = $("hood");
+const lmListEl = $("lmList");
+const rightPane = $("rightPane");
+const countPill = $("countPill");
+const statusEl = $("status");
+
+function normalize(s){ return String(s ?? "").toLowerCase().trim(); }
+function escapeHtml(str){
+  return String(str ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+}
+
+function fillNeighborhoods(){
+  const g = groupEl.value;
+  let hoods = [];
+  if (g) hoods = AREA_GROUPS[g] || [];
+  else hoods = Object.values(AREA_GROUPS).flat();
+  hoods = Array.from(new Set(hoods)).sort((a,b)=>a.localeCompare(b));
+  const current = hoodEl.value;
+
+  hoodEl.innerHTML = `<option value="">All</option>` + hoods.map(h => `<option value="${escapeHtml(h)}">${escapeHtml(h)}</option>`).join("");
+  if (hoods.includes(current)) hoodEl.value = current;
+}
+
+// ---------------- Landmark list render ----------------
+let currentLandmarkId = null;
+
+function getFilteredLandmarks(){
+  const q = normalize(qEl.value);
+  const g = groupEl.value;
+  const h = hoodEl.value;
+
+  return LANDMARKS.filter(lm => {
+    if (g && lm.group !== g) return false;
+    if (h && lm.neighborhood !== h) return false;
+    if (!q) return true;
+
+    const hay = normalize([
+      lm.name, lm.address, lm.group, lm.neighborhood,
+      (lm.keywords||[]).join(" "),
+      (lm.quickFacts||[]).join(" "),
+      (lm.examQA||[]).map(x=>x.q+" "+x.a).join(" ")
+    ].join(" "));
+    return hay.includes(q);
+  }).sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+function renderLandmarkList(){
+  const items = getFilteredLandmarks();
+  countPill.textContent = `${items.length} landmarks`;
+
+  if (!items.length){
+    lmListEl.innerHTML = `<div class="empty">No matches. Try a different search.</div>`;
+    return;
+  }
+
+  lmListEl.innerHTML = items.map(lm => {
+    const selected = lm.id === currentLandmarkId;
+    return `
+      <button class="lmBtn" data-id="${escapeHtml(lm.id)}" style="${selected ? 'border-color: rgba(0,212,255,.55);' : ''}">
+        <div>
+          <div class="lmTitle">${escapeHtml(lm.name)}</div>
+          <div class="lmMeta">${escapeHtml(lm.group)} → ${escapeHtml(lm.neighborhood)}<br>${escapeHtml(lm.address)}</div>
+        </div>
+        <span class="badge">${lm.examQA?.length || 0} Qs</span>
+      </button>
+    `;
+  }).join("");
+
+  lmListEl.querySelectorAll("[data-id]").forEach(btn => {
+    btn.addEventListener("click", () => openLandmark(btn.dataset.id));
+  });
+}
+
+// ---------------- Detail view ----------------
+function openLandmark(id){
+  const lm = LANDMARKS.find(x => x.id === id);
+  if (!lm) return;
+  currentLandmarkId = id;
+  renderLandmarkList();
+
+  const mapsQuery = encodeURIComponent(`${lm.name} ${lm.address}`);
+  const mapsLink = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
+  rightPane.innerHTML = `
+    <div>
+      <h2 class="detailTitle">${escapeHtml(lm.name)}</h2>
+      <div class="detailMeta">
+        <div><strong>Address:</strong> ${escapeHtml(lm.address)}</div>
+        <div><strong>Area:</strong> ${escapeHtml(lm.group)} → ${escapeHtml(lm.neighborhood)}</div>
+      </div>
+
+      <div class="chips">
+        <a class="chip" href="${mapsLink}" target="_blank" rel="noopener">🔎 <strong>Map</strong></a>
+        <button class="chip" id="copyBtn">📋 <strong>Copy</strong></button>
+      </div>
+
+      <div class="sectionTitle">Quick Study Card</div>
+      <div class="facts">
+        <div class="muted">Read once, then try recalling without looking.</div>
+        <ul>
+          ${(lm.quickFacts||[]).map(f=>`<li>${escapeHtml(f)}</li>`).join("")}
+        </ul>
+      </div>
+
+      <div class="sectionTitle">Exam-Style Questions</div>
+      ${(lm.examQA||[]).map((qa, idx) => `
+        <div class="qCard" style="margin-top:10px">
+          <div class="qRow">
+            <div class="qPrompt"><strong>Q${idx+1}:</strong> ${escapeHtml(qa.q)}</div>
+            <button class="primary" data-reveal="${idx}">Reveal Answer</button>
+            <div class="answer" id="ans_${idx}">${escapeHtml(qa.a)}</div>
+          </div>
+        </div>
+      `).join("")}
+
+      <div class="sectionTitle">How to use this for the exam</div>
+      <div class="facts">
+        <ul>
+          <li><strong>Search</strong> → pick landmark → <strong>say the answer out loud</strong> before revealing.</li>
+          <li>Practice: “What is it, where is it, why it matters, 1–2 facts, what’s nearby.”</li>
+        </ul>
+      </div>
+    </div>
+  `;
+
+  // wire buttons
+  $("copyBtn").addEventListener("click", () => {
+    const txt = `${lm.name} — ${lm.address}`;
+    navigator.clipboard?.writeText(txt).then(() => {
+      statusEl.textContent = "Copied ✅";
+      setTimeout(()=>statusEl.textContent="Tip: Add this page to your phone Home Screen for quick access.", 1200);
+    }).catch(()=>alert("Copy blocked by browser."));
+  });
+
+  rightPane.querySelectorAll("[data-reveal]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const i = btn.dataset.reveal;
+      const ans = $("ans_"+i);
+      const showing = ans.style.display === "block";
+      ans.style.display = showing ? "none" : "block";
+      btn.textContent = showing ? "Reveal Answer" : "Hide Answer";
+    });
+  });
+}
+
+// ---------------- Quiz mode ----------------
+let quizOn = false;
+
+function buildQuizPool(filteredLandmarks){
+  const pool = [];
+  filteredLandmarks.forEach(lm => {
+    (lm.examQA || []).forEach((qa, idx) => {
+      pool.push({ lmId: lm.id, lmName: lm.name, group: lm.group, neighborhood: lm.neighborhood, q: qa.q, a: qa.a });
+    });
+  });
+  return pool;
+}
+
+function showQuiz(){
+  quizOn = true;
+  const filtered = getFilteredLandmarks();
+  const pool = buildQuizPool(filtered);
+
+  if (!pool.length){
+    rightPane.innerHTML = `<div class="empty">No questions available in the current filter. Clear filters or add more Qs.</div>`;
+    return;
+  }
+
+  let current = pool[Math.floor(Math.random()*pool.length)];
+
+  rightPane.innerHTML = `
+    <div>
+      <h2 class="detailTitle">Quiz Mode</h2>
+      <div class="detailMeta">Filtered pool: <strong>${pool.length}</strong> questions</div>
+
+      <div class="sectionTitle">Question</div>
+      <div class="qCard">
+        <div class="qPrompt" id="quizQ" style="font-size:14px"><strong>${escapeHtml(current.q)}</strong></div>
+        <div class="muted">Landmark: <strong>${escapeHtml(current.lmName)}</strong> (${escapeHtml(current.group)} → ${escapeHtml(current.neighborhood)})</div>
+
+        <div class="actions">
+          <button class="primary" id="revealQuiz">Reveal Answer</button>
+          <button class="alt" id="nextQuiz">Next Question</button>
+          <button id="openLm">Open Landmark</button>
+        </div>
+
+        <div class="answer" id="quizA">${escapeHtml(current.a)}</div>
+      </div>
+
+      <div class="sectionTitle">How to drill</div>
+      <div class="facts">
+        <ul>
+          <li>Before tapping reveal, answer out loud in 10–15 seconds.</li>
+          <li>If you miss it, tap <strong>Open Landmark</strong> and review the Quick Study Card.</li>
+        </ul>
+      </div>
+    </div>
+  `;
+
+  function pickNew(){
+    current = pool[Math.floor(Math.random()*pool.length)];
+    $("quizQ").innerHTML = `<strong>${escapeHtml(current.q)}</strong>`;
+    $("quizA").innerHTML = escapeHtml(current.a);
+    $("quizA").style.display = "none";
+    $("revealQuiz").textContent = "Reveal Answer";
+  }
+
+  $("revealQuiz").addEventListener("click", () => {
+    const ans = $("quizA");
+    const showing = ans.style.display === "block";
+    ans.style.display = showing ? "none" : "block";
+    $("revealQuiz").textContent = showing ? "Reveal Answer" : "Hide Answer";
+  });
+  $("nextQuiz").addEventListener("click", pickNew);
+  $("openLm").addEventListener("click", () => openLandmark(current.lmId));
+}
+
+// ---------------- Controls ----------------
+$("quizBtn").addEventListener("click", () => showQuiz());
+
+$("clearBtn").addEventListener("click", () => {
+  qEl.value = "";
+  groupEl.value = "";
+  hoodEl.value = "";
+  fillNeighborhoods();
+  currentLandmarkId = null;
+  renderLandmarkList();
+  rightPane.innerHTML = `<div class="empty">Select a landmark on the left to view study facts and exam questions.</div>`;
+});
+
+qEl.addEventListener("input", () => { renderLandmarkList(); });
+groupEl.addEventListener("change", () => { fillNeighborhoods(); renderLandmarkList(); });
+hoodEl.addEventListener("change", () => { renderLandmarkList(); });
+
+// init
+fillNeighborhoods();
+renderLandmarkList();
+</script>
+</body>
+</html>
