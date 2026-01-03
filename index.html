@@ -152,16 +152,244 @@
 /**
  * ✅ YOU EDIT HERE:
  * Add landmarks + questions.
- * The question styles match typical NYC guide-exam patterns:
- * - What is it / where is it / why important
- * - dates, architect/designer, style, purpose
- * - nearby landmarks/streets/transit context
+ * - Each landmark has its own 3 landmark-specific questions (LM Questions)
+ * - PLUS each landmark automatically shows 3 common exam questions (Common Exam)
+ *   (So you don’t have to copy/paste the same exam questions into every landmark.)
  */
+
 const AREA_GROUPS = {
   "Midtown": ["East Midtown", "Midtown", "Chelsea"],
   "Downtown": ["East Village", "Financial District", "Tribeca"]
 };
 
+/**
+ * ✅ COMMON EXAM QUESTIONS (3 examples)
+ * These are shown for EVERY landmark automatically.
+ * You can expand this list later (add more objects).
+ */
+const COMMON_EXAM_QA = [
+  {
+    q: "Common Exam: What borough is this landmark located in?",
+    a: "Manhattan."
+  },
+  {
+    q: "Common Exam: Would this landmark typically be viewed from the exterior, interior, or both on a standard walking tour?",
+    a: "Often exterior; interior visits depend on time, access, ticketing, and group interest."
+  },
+  {
+    q: "Common Exam: What is one safety or crowd-control responsibility of a licensed NYC tour guide at this location?",
+    a: "To keep the group together, avoid blocking sidewalks or entrances, and follow posted rules or security instructions."
+  },
+  {
+    q: "Common Exam: If a guest becomes separated from the group, what is the guide’s best immediate action?",
+    a: "Pause the group in a safe location, attempt contact, and follow established group-recovery procedures."
+  },
+  {
+    q: "Common Exam: Why is it important for a tour guide to know nearby streets or landmarks?",
+    a: "Because guests often ask for directions, meeting points, and nearby attractions during the tour."
+  },
+  {
+    q: "Common Exam: Can a tour guide legally provide historical and factual information about this landmark?",
+    a: "Yes, licensed NYC tour guides are authorized to provide historical and factual information about city landmarks."
+  },
+  {
+    q: "Common Exam: What should a guide do if a guest asks a question the guide does not know the answer to?",
+    a: "Acknowledge the question honestly and provide accurate information later rather than guessing."
+  },
+  {
+    q: "Common Exam: Why should a guide avoid blocking entrances, exits, or sidewalks while speaking?",
+    a: "Because it can create safety hazards, violate city regulations, and disrupt pedestrian flow."
+  },
+  {
+    q: "Common Exam: What type of information do tourists most commonly ask about landmarks?",
+    a: "Historical significance, purpose, dates, nearby attractions, and photo opportunities."
+  },
+  {
+    q: "Common Exam: Why is time management important during a walking tour?",
+    a: "Because tours must stay on schedule, respect guest expectations, and avoid fatigue or overcrowding."
+  },
+{
+  q: "Common Exam: What should a tour guide do before beginning a walking tour?",
+  a: "Introduce themselves, explain the route and duration, set expectations, and establish a meeting point policy."
+},
+{
+  q: "Common Exam: Why is it important for a guide to monitor the pace of the group?",
+  a: "To ensure the group stays together, avoids fatigue, and accommodates guests of varying mobility levels."
+},
+{
+  q: "Common Exam: What is an appropriate response if a guest challenges a historical fact during the tour?",
+  a: "Respond professionally, clarify facts when possible, and avoid confrontation or speculation."
+},
+{
+  q: "Common Exam: What should a guide do if a location becomes unexpectedly inaccessible?",
+  a: "Safely reroute the group, provide alternative commentary, and continue the tour smoothly."
+},
+{
+  q: "Common Exam: Why should a guide be aware of restroom locations along the route?",
+  a: "Because guests frequently ask, and knowing locations improves comfort and tour flow."
+},
+{
+  q: "Common Exam: What is one reason guides should avoid using amplified sound in certain areas?",
+  a: "Because of noise regulations, residential concerns, and potential permit restrictions."
+},
+{
+  q: "Common Exam: What is the guide’s responsibility regarding local laws and regulations?",
+  a: "To follow city rules, respect property restrictions, and ensure the group does the same."
+},
+{
+  q: "Common Exam: How should a guide handle disruptive behavior from a guest?",
+  a: "Address it calmly and respectfully, prioritizing group safety and overall tour experience."
+},
+{
+  q: "Common Exam: Why is flexibility important when leading a walking tour?",
+  a: "Because weather, crowds, and guest needs can change unexpectedly."
+},
+{
+  q: "Common Exam: What is one professional reason a guide should avoid personal opinions on sensitive topics?",
+  a: "To maintain neutrality, professionalism, and a welcoming environment for all guests."
+},
+{
+  q: "Common Exam: What information should a tour guide always confirm before starting a tour?",
+  a: "The tour route, duration, meeting point, and any special considerations such as weather or accessibility."
+},
+{
+  q: "Common Exam: Why is it important for a guide to face the group while speaking?",
+  a: "So guests can hear clearly, stay engaged, and remain aware of their surroundings."
+},
+{
+  q: "Common Exam: What should a guide do if a guest asks for a recommendation outside the tour scope?",
+  a: "Offer general guidance when appropriate and avoid guarantees or endorsements beyond factual information."
+},
+{
+  q: "Common Exam: Why should a guide be familiar with alternate routes?",
+  a: "To adapt quickly in case of street closures, heavy crowds, or unexpected delays."
+},
+{
+  q: "Common Exam: What is an appropriate way to handle guest questions while crossing streets?",
+  a: "Pause discussion until the group has safely crossed and regrouped."
+},
+{
+  q: "Common Exam: What is one reason guides should regularly count their guests?",
+  a: "To ensure no one is separated from the group during movement."
+},
+{
+  q: "Common Exam: How should a guide respond if a guest wants to leave the tour early?",
+  a: "Provide clear directions or information and ensure the guest departs safely."
+},
+{
+  q: "Common Exam: Why is situational awareness important for a tour guide?",
+  a: "To anticipate safety concerns, manage crowds, and adjust commentary as needed."
+},
+{
+  q: "Common Exam: What should a guide do if emergency vehicles need to pass near the group?",
+  a: "Move the group to a safe location and avoid obstructing emergency access."
+},
+{
+  q: "Common Exam: Why should a guide avoid giving legal, medical, or financial advice?",
+  a: "Because it is outside the guide’s professional role and may create liability."
+},
+{
+  q: "Common Exam: Why should a tour guide be aware of accessibility concerns along a route?",
+  a: "To ensure the tour can safely accommodate guests with mobility or special needs."
+},
+{
+  q: "Common Exam: What is an appropriate action if weather conditions worsen during a tour?",
+  a: "Adjust the pace or route, seek sheltered areas if needed, and keep guests informed."
+},
+{
+  q: "Common Exam: Why is it important for a guide to speak clearly and at an appropriate volume?",
+  a: "So guests can hear instructions without disturbing nearby residents or businesses."
+},
+{
+  q: "Common Exam: What should a guide do if a guest requests information that is clearly incorrect?",
+  a: "Politely clarify the facts without dismissing the guest’s question."
+},
+{
+  q: "Common Exam: Why should a guide avoid making promises about access or wait times?",
+  a: "Because conditions can change and guarantees may lead to guest dissatisfaction."
+},
+{
+  q: "Common Exam: What is one reason a guide should arrive early to the meeting point?",
+  a: "To prepare, handle questions, and ensure the tour begins smoothly and on time."
+},
+{
+  q: "Common Exam: How should a guide manage guest expectations at the start of a tour?",
+  a: "By clearly explaining the route, duration, pacing, and any known limitations."
+},
+{
+  q: "Common Exam: Why is it important for a guide to know the historical context of landmarks?",
+  a: "So information shared is accurate, meaningful, and engaging for visitors."
+},
+{
+  q: "Common Exam: What should a guide do if a guest becomes disruptive to the group?",
+  a: "Address the behavior calmly, prioritize group safety, and maintain a professional tone."
+},
+{
+  q: "Common Exam: Why should a guide continuously observe the group during the tour?",
+  a: "To ensure safety, cohesion, and engagement throughout the experience."
+},
+{
+  q: "Common Exam: What should a tour guide do if approached by a city official questioning the tour?",
+  a: "Cooperate respectfully, follow instructions, and present a valid NYC tour guide license if requested."
+},
+{
+  q: "Common Exam: Why should a guide understand the difference between public and private space?",
+  a: "Because access rules, speech, and group behavior differ between public property and private property."
+},
+{
+  q: "Common Exam: What is one reason a tour guide should avoid soliciting tips aggressively?",
+  a: "Because it is unprofessional and may violate company policies or city expectations."
+},
+{
+  q: "Common Exam: What should a guide do if a guest files a complaint during the tour?",
+  a: "Listen calmly, acknowledge the concern, and address it professionally without disrupting the group."
+},
+{
+  q: "Common Exam: Why should a guide avoid entering private businesses with a large group without permission?",
+  a: "Because it may disrupt operations and violate property rules."
+},
+{
+  q: "Common Exam: What is an appropriate response if police or emergency services restrict access to an area?",
+  a: "Immediately comply, reroute the group, and continue the tour safely."
+},
+{
+  q: "Common Exam: Why is it important for a guide to avoid sharing unverified stories or myths?",
+  a: "Because the exam and professional standards require factual and accurate information."
+},
+{
+  q: "Common Exam: What should a guide do if a guest asks about controversial or sensitive historical topics?",
+  a: "Present balanced, factual information without personal bias or opinion."
+},
+{
+  q: "Common Exam: Why should a guide be aware of city noise rules and ordinances?",
+  a: "To avoid violations and ensure respectful interaction with the surrounding community."
+},
+{
+  q: "Common Exam: What is one professional reason a guide should remain calm during unexpected situations?",
+  a: "Because guests look to the guide for leadership, reassurance, and clear direction."
+},
+{
+  q: "Common Exam: Who is the current Governor of New York State?",
+  a: "Kathy Hochul."
+},
+{
+  q: "Common Exam: Who is the current Mayor of New York City?",
+  a: "Eric Adams."
+}
+
+
+
+
+
+];
+
+
+/**
+ * ✅ LANDMARKS (3 examples)
+ * Each has 3 landmark-specific questions.
+ * The app will display:
+ *   (landmark examQA) + (COMMON_EXAM_QA)
+ */
 const LANDMARKS = [
   {
     id: "gct",
@@ -217,6 +445,412 @@ const LANDMARKS = [
       }
     ]
   },
+{
+  id: "bryant_park",
+  name: "Bryant Park",
+  address: "Bryant Park, New York, NY 10018 (between 40th–42nd St & 5th–6th Ave)",
+  group: "Midtown",
+  neighborhood: "Midtown",
+  keywords: ["bryant park", "42nd", "5th avenue", "6th avenue", "nypl", "winter village"],
+  quickFacts: [
+    "A major public park behind the New York Public Library (Main Branch).",
+    "Known for seasonal events, seating areas, and winter activities (popular tourist stop).",
+    "Excellent tour stop for group flow: open space, easy meeting point, nearby landmarks."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: Where is Bryant Park located (streets/avenues) and what is it known for?",
+      a: "It’s in Midtown Manhattan between 40th–42nd Streets and 5th–6th Avenues, known as a major public park and popular visitor stop near the NYPL."
+    },
+    {
+      q: "Exam-style: What major landmark is directly next to Bryant Park?",
+      a: "The New York Public Library (Stephen A. Schwarzman Building / Main Branch)."
+    },
+    {
+      q: "Exam-style: Give one practical tour-guide reason to stop at Bryant Park.",
+      a: "It’s a spacious, easy-to-navigate meeting point for groups with nearby attractions, seating, and seasonal activities."
+    }
+  ]
+},
+{
+  id: "nypl_main",
+  name: "New York Public Library (Stephen A. Schwarzman Building)",
+  address: "476 5th Ave, New York, NY 10018",
+  group: "Midtown",
+  neighborhood: "Midtown",
+  keywords: ["nypl", "public library", "5th ave", "42nd", "bryant park", "library lions"],
+  quickFacts: [
+    "Iconic NYC library building on Fifth Avenue near 42nd Street.",
+    "Famous exterior includes the stone lions (Patience and Fortitude).",
+    "A common tour stop paired with Bryant Park for quick history + photos."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: Where is the New York Public Library main building located?",
+      a: "On Fifth Avenue in Midtown Manhattan, near 42nd Street, next to Bryant Park."
+    },
+    {
+      q: "Exam-style: Name a famous feature outside the NYPL main building that tourists ask about.",
+      a: "The two stone lion statues (often referred to as Patience and Fortitude)."
+    },
+    {
+      q: "Exam-style: Why is the NYPL main building significant for tours?",
+      a: "It’s a major cultural institution and iconic NYC architecture, centrally located near other Midtown landmarks."
+    }
+  ]
+},
+{
+  id: "chrysler_building",
+  name: "Chrysler Building",
+  address: "405 Lexington Ave, New York, NY 10174",
+  group: "Midtown",
+  neighborhood: "East Midtown",
+  keywords: ["chrysler building", "art deco", "lexington", "42nd", "skyscraper"],
+  quickFacts: [
+    "Completed in 1930; one of NYC’s most famous Art Deco skyscrapers.",
+    "Known for its stainless-steel crown/spire and classic skyline appearance.",
+    "Best explained from street level as a photo stop; interior access may vary."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What architectural style is the Chrysler Building known for?",
+      a: "Art Deco."
+    },
+    {
+      q: "Exam-style: What makes the Chrysler Building visually famous?",
+      a: "Its stainless-steel crown/spire and iconic Art Deco design details."
+    },
+    {
+      q: "Exam-style: In what general Midtown area is the Chrysler Building located?",
+      a: "East Midtown, near Grand Central / 42nd Street area."
+    }
+  ]
+},
+{
+  id: "washington_square_park",
+  name: "Washington Square Park",
+  address: "Washington Square, New York, NY 10012",
+  group: "Downtown",
+  neighborhood: "East Village",
+  keywords: ["washington square park", "greenwich village", "arch", "nyu", "downtown park"],
+  quickFacts: [
+    "Major Downtown park near NYU and the Village area.",
+    "Known for the Washington Square Arch and strong street culture (music, chess, crowds).",
+    "Great place to discuss neighborhood identity, culture, and managing group flow."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is Washington Square Park known for?",
+      a: "Its large public plaza/park setting, the Washington Square Arch, and lively street culture near NYU."
+    },
+    {
+      q: "Exam-style: What is one common crowd-management tip for guiding groups here?",
+      a: "Use a clear meeting point, avoid blocking pathways, and keep the group together due to heavy foot traffic."
+    },
+    {
+      q: "Exam-style: Name one nearby institution commonly associated with Washington Square Park.",
+      a: "New York University (NYU)."
+    }
+  ]
+},
+{
+  id: "911_memorial",
+  name: "National September 11 Memorial (9/11 Memorial)",
+  address: "180 Greenwich St, New York, NY 10007",
+  group: "Downtown",
+  neighborhood: "Financial District",
+  keywords: ["9/11 memorial", "world trade center", "ground zero", "one world trade", "fidi"],
+  quickFacts: [
+    "Memorial plaza at the World Trade Center site in Lower Manhattan.",
+    "Features two reflecting pools in the footprints of the Twin Towers with names inscribed.",
+    "A high-emotion stop: guides should keep tone respectful and allow time for reflection."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: Where is the 9/11 Memorial located?",
+      a: "At the World Trade Center site in Lower Manhattan (Financial District area)."
+    },
+    {
+      q: "Exam-style: What are the two main design features visitors notice at the 9/11 Memorial?",
+      a: "The two reflecting pools in the footprints of the Twin Towers and the inscribed names of victims."
+    },
+    {
+      q: "Exam-style: What is one guiding best-practice when bringing a group here?",
+      a: "Maintain a respectful tone, avoid loud commentary, and give visitors time/space to reflect."
+    }
+  ]
+},
+{
+  id: "empire_state",
+  name: "Empire State Building",
+  address: "20 W 34th St, New York, NY 10001",
+  group: "Midtown",
+  neighborhood: "Midtown",
+  keywords: ["empire state", "34th street", "5th avenue", "observatory", "skyscraper"],
+  quickFacts: [
+    "Iconic NYC skyscraper with observatories and skyline views.",
+    "Located in Midtown near 34th Street; major tourist photo and orientation point.",
+    "Often used to discuss NYC skyscraper history and Midtown geography."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: Where is the Empire State Building located?",
+      a: "In Midtown Manhattan on West 34th Street near Fifth Avenue."
+    },
+    {
+      q: "Exam-style: Why is the Empire State Building significant for visitors?",
+      a: "It’s one of NYC’s most famous skyscrapers and a major observation/deck attraction with skyline views."
+    },
+    {
+      q: "Exam-style: Give one practical tour-guide tip when stopping near the Empire State Building.",
+      a: "Expect heavy crowds and keep the group to the side so sidewalks and building entrances stay clear."
+    }
+  ]
+},
+{
+  id: "madison_square_garden",
+  name: "Madison Square Garden (MSG)",
+  address: "4 Pennsylvania Plaza, New York, NY 10001",
+  group: "Midtown",
+  neighborhood: "Midtown",
+  keywords: ["msg", "madison square garden", "penn station", "arena", "events"],
+  quickFacts: [
+    "Major sports and concert arena located above Penn Station.",
+    "A key orientation point for Midtown West and transit connections.",
+    "Useful for explaining how transit hubs connect to major venues."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is Madison Square Garden and where is it located?",
+      a: "A major sports and entertainment arena located at Penn Plaza above/near Penn Station in Midtown Manhattan."
+    },
+    {
+      q: "Exam-style: What major transit hub is directly connected to MSG?",
+      a: "Penn Station."
+    },
+    {
+      q: "Exam-style: Why is MSG an important stop or reference point on tours?",
+      a: "It’s a famous venue and a major navigation landmark near transit, hotels, and Midtown West attractions."
+    }
+  ]
+},
+{
+  id: "penn_station",
+  name: "Penn Station (New York Penn Station)",
+  address: "Pennsylvania Station, New York, NY 10001",
+  group: "Midtown",
+  neighborhood: "Midtown",
+  keywords: ["penn station", "amtrak", "nj transit", "lirr", "midtown west"],
+  quickFacts: [
+    "Major rail hub serving Amtrak, NJ Transit, and the LIRR.",
+    "Central for explaining regional access to Manhattan (NJ, Long Island, DC/Boston corridor).",
+    "High traffic area; good for safety and group-control practice."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What services operate through Penn Station?",
+      a: "Amtrak, NJ Transit, and the Long Island Rail Road (LIRR)."
+    },
+    {
+      q: "Exam-style: Why is Penn Station important in NYC geography?",
+      a: "It’s one of NYC’s main rail gateways and a key Midtown transit hub for regional travel."
+    },
+    {
+      q: "Exam-style: What is one group-management tip when guiding near Penn Station?",
+      a: "Choose a clear meeting point and keep the group close due to heavy foot traffic and congestion."
+    }
+  ]
+},
+{
+  id: "rockefeller_center",
+  name: "Rockefeller Center",
+  address: "45 Rockefeller Plaza, New York, NY 10111",
+  group: "Midtown",
+  neighborhood: "Midtown",
+  keywords: ["rockefeller center", "top of the rock", "radio city", "5th avenue", "christmas tree"],
+  quickFacts: [
+    "Famous Midtown complex known for seasonal events and major attractions.",
+    "Home area for Top of the Rock and close to Radio City Music Hall.",
+    "Popular for holiday tourism and Midtown walking routes."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is Rockefeller Center known for?",
+      a: "A major Midtown complex known for attractions like Top of the Rock and seasonal holiday tourism."
+    },
+    {
+      q: "Exam-style: Name one major nearby attraction associated with Rockefeller Center.",
+      a: "Examples: Top of the Rock observation deck or Radio City Music Hall."
+    },
+    {
+      q: "Exam-style: Why is Rockefeller Center a practical tour stop?",
+      a: "It’s centrally located, highly recognizable, and connects easily to other Midtown landmarks."
+    }
+  ]
+},
+{
+  id: "st_patricks_cathedral",
+  name: "St. Patrick’s Cathedral",
+  address: "5th Ave, New York, NY 10022 (at E 50th St)",
+  group: "Midtown",
+  neighborhood: "Midtown",
+  keywords: ["st patrick's cathedral", "5th avenue", "50th street", "cathedral", "rockefeller"],
+  quickFacts: [
+    "Major cathedral on Fifth Avenue near Rockefeller Center.",
+    "Common stop for architecture + cultural significance along 5th Ave routes.",
+    "Guides should maintain respectful tone and be aware of services."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: Where is St. Patrick’s Cathedral located?",
+      a: "On Fifth Avenue at around 50th Street in Midtown Manhattan, near Rockefeller Center."
+    },
+    {
+      q: "Exam-style: Why is St. Patrick’s Cathedral a common stop on Fifth Avenue tours?",
+      a: "It’s a major religious and architectural landmark in a prime Midtown location."
+    },
+    {
+      q: "Exam-style: What is one best-practice tip when guiding visitors here?",
+      a: "Be respectful of worship/services and keep voices low inside or near entrances."
+    }
+  ]
+},
+{
+  id: "high_line",
+  name: "The High Line",
+  address: "High Line entrance varies (Chelsea/Meatpacking), New York, NY",
+  group: "Midtown",
+  neighborhood: "Chelsea",
+  keywords: ["high line", "elevated park", "chelsea", "meatpacking", "hudson yards"],
+  quickFacts: [
+    "Elevated linear park built on a former rail line on Manhattan’s West Side.",
+    "Popular walking route connecting Chelsea/Meatpacking toward Hudson Yards area.",
+    "Great for tours due to views, easy walking flow, and nearby food stops."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is the High Line and why is it popular?",
+      a: "An elevated park on Manhattan’s West Side, popular for walking routes, views, and nearby attractions."
+    },
+    {
+      q: "Exam-style: What neighborhood is strongly associated with the High Line?",
+      a: "Chelsea (and nearby Meatpacking/Hudson Yards area)."
+    },
+    {
+      q: "Exam-style: Name one practical reason guides like using the High Line in routes.",
+      a: "It provides an easy, scenic walking corridor with predictable flow and nearby stops for breaks."
+    }
+  ]
+},
+{
+  id: "flatiron_building",
+  name: "Flatiron Building",
+  address: "175 5th Ave, New York, NY 10010",
+  group: "Midtown",
+  neighborhood: "Midtown",
+  keywords: ["flatiron", "5th avenue", "23rd street", "madison square", "triangle building"],
+  quickFacts: [
+    "Famous triangular building near 23rd Street where Broadway and Fifth Avenue meet.",
+    "A classic photo landmark and a good point to explain street layout.",
+    "Often paired with Madison Square Park area context."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What makes the Flatiron Building easy to recognize?",
+      a: "Its distinctive triangular shape where Broadway and Fifth Avenue meet near 23rd Street."
+    },
+    {
+      q: "Exam-style: Where is the Flatiron Building located (general area)?",
+      a: "Near 23rd Street in Manhattan, where Broadway and Fifth Avenue intersect."
+    },
+    {
+      q: "Exam-style: Why is the Flatiron Building useful for guiding and orientation?",
+      a: "It’s a strong visual landmark and helps explain the street grid vs Broadway’s diagonal route."
+    }
+  ]
+},
+{
+  id: "federal_hall",
+  name: "Federal Hall",
+  address: "26 Wall St, New York, NY 10005",
+  group: "Downtown",
+  neighborhood: "Financial District",
+  keywords: ["federal hall", "wall street", "historic", "george washington", "nyse"],
+  quickFacts: [
+    "Historic government-related landmark on Wall Street, near the NYSE.",
+    "Common cluster stop for U.S. history themes in the Financial District.",
+    "Great place to connect early American history to NYC’s role in finance/government."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: Where is Federal Hall located?",
+      a: "On Wall Street in the Financial District, near the New York Stock Exchange."
+    },
+    {
+      q: "Exam-style: Why is Federal Hall important in NYC history tours?",
+      a: "It’s a key historic site tied to early U.S. government history and is located in a major civic/financial area."
+    },
+    {
+      q: "Exam-style: Name one nearby landmark you can point out from Federal Hall.",
+      a: "Examples: the NYSE, Wall Street, or Trinity Church (a short walk)."
+    }
+  ]
+},
+{
+  id: "trinity_church",
+  name: "Trinity Church (Wall Street)",
+  address: "89 Broadway, New York, NY 10006",
+  group: "Downtown",
+  neighborhood: "Financial District",
+  keywords: ["trinity church", "wall street", "broadway", "church", "cemetery"],
+  quickFacts: [
+    "Historic church near Wall Street and Broadway in the Financial District.",
+    "A well-known contrast stop: historic religious site surrounded by finance district towers.",
+    "Useful for explaining early NYC history and neighborhood development."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: Where is Trinity Church located?",
+      a: "Near Wall Street at Broadway in the Financial District (Lower Manhattan)."
+    },
+    {
+      q: "Exam-style: Why is Trinity Church a common stop on Financial District walking tours?",
+      a: "It’s a historic landmark and a strong visual contrast to the surrounding financial district skyscrapers."
+    },
+    {
+      q: "Exam-style: Give one tour-guide best practice when stopping at Trinity Church.",
+      a: "Be respectful, avoid blocking entrances, and keep groups organized due to busy sidewalks."
+    }
+  ]
+},
+{
+  id: "stonewall_inn",
+  name: "Stonewall Inn",
+  address: "53 Christopher St, New York, NY 10014",
+  group: "Downtown",
+  neighborhood: "East Village",
+  keywords: ["stonewall", "christopher street", "greenwich village", "history", "lgbtq"],
+  quickFacts: [
+    "Historic landmark associated with major civil rights history in NYC.",
+    "A commonly referenced site in Downtown/Village area history discussions.",
+    "Best approached with respectful tone and clear historical context."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: Where is the Stonewall Inn located?",
+      a: "On Christopher Street in the Village area of Downtown Manhattan."
+    },
+    {
+      q: "Exam-style: Why is the Stonewall Inn historically significant?",
+      a: "It is widely recognized as an important site in civil rights history in New York City."
+    },
+    {
+      q: "Exam-style: What is a best-practice guiding approach when discussing this site?",
+      a: "Use respectful language, provide accurate context, and keep the group attentive without being disruptive."
+    }
+  ]
+},
+
   {
     id: "nyse",
     name: "New York Stock Exchange (NYSE)",
@@ -243,8 +877,290 @@ const LANDMARKS = [
         a: "Keep the group to the side (not blocking sidewalks/entrances), avoid restricted areas, and expect heavy security presence."
       }
     ]
-  }
+  },
+{
+  id: "times_square",
+  name: "Times Square",
+  address: "Times Square, New York, NY 10036",
+  group: "Midtown",
+  neighborhood: "Midtown",
+  keywords: ["times square", "broadway", "theater district", "42nd street", "tourists"],
+  quickFacts: [
+    "Major commercial and entertainment hub in Midtown Manhattan.",
+    "Known for bright billboards, Broadway theaters, and heavy pedestrian traffic.",
+    "Requires strong crowd-control and clear meeting points."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is Times Square known for?",
+      a: "It is known for its bright electronic billboards, Broadway theaters, and as a major tourist destination."
+    },
+    {
+      q: "Exam-style: Why is group management important in Times Square?",
+      a: "Because of heavy crowds, traffic flow, and constant pedestrian movement."
+    },
+    {
+      q: "Exam-style: What is a good guiding strategy when stopping here?",
+      a: "Use a clear meeting point and keep explanations brief to avoid blocking foot traffic."
+    }
+  ]
+},
+{
+  id: "radio_city",
+  name: "Radio City Music Hall",
+  address: "1260 6th Ave, New York, NY 10020",
+  group: "Midtown",
+  neighborhood: "Midtown",
+  keywords: ["radio city", "music hall", "rockefeller", "concert venue"],
+  quickFacts: [
+    "Historic entertainment venue near Rockefeller Center.",
+    "Famous for the Rockettes and Art Deco interior.",
+    "Often paired with Rockefeller Center tours."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is Radio City Music Hall known for?",
+      a: "A historic entertainment venue famous for concerts, shows, and the Rockettes."
+    },
+    {
+      q: "Exam-style: Where is Radio City Music Hall located?",
+      a: "Near Rockefeller Center in Midtown Manhattan."
+    },
+    {
+      q: "Exam-style: Why is it a practical stop on Midtown tours?",
+      a: "It is centrally located and closely connected to other major attractions."
+    }
+  ]
+},
+{
+  id: "one_world_trade",
+  name: "One World Trade Center",
+  address: "285 Fulton St, New York, NY 10007",
+  group: "Downtown",
+  neighborhood: "Financial District",
+  keywords: ["one world trade", "freedom tower", "wtc", "observatory"],
+  quickFacts: [
+    "Tallest building in the Western Hemisphere.",
+    "Symbol of rebuilding and resilience after 9/11.",
+    "Often referenced alongside the 9/11 Memorial."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is One World Trade Center?",
+      a: "A major skyscraper and symbol of rebuilding at the World Trade Center site."
+    },
+    {
+      q: "Exam-style: Why is it historically significant?",
+      a: "It represents resilience and redevelopment after the events of September 11, 2001."
+    },
+    {
+      q: "Exam-style: What nearby site is commonly discussed together with it?",
+      a: "The 9/11 Memorial."
+    }
+  ]
+},
+{
+  id: "battery_park",
+  name: "The Battery (Battery Park)",
+  address: "Battery Park, New York, NY 10004",
+  group: "Downtown",
+  neighborhood: "Financial District",
+  keywords: ["battery park", "statue of liberty", "ellis island", "harbor"],
+  quickFacts: [
+    "Waterfront park at the southern tip of Manhattan.",
+    "Departure point for Statue of Liberty and Ellis Island ferries.",
+    "Good orientation point for NYC harbor geography."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is Battery Park commonly used for?",
+      a: "Access to Statue of Liberty and Ellis Island ferries."
+    },
+    {
+      q: "Exam-style: Why is Battery Park useful on Downtown tours?",
+      a: "It provides open space, harbor views, and geographic orientation."
+    },
+    {
+      q: "Exam-style: What crowd-management issue should guides expect?",
+      a: "Long ferry lines and heavy tourist congestion."
+    }
+  ]
+},
+{
+  id: "statue_liberty",
+  name: "Statue of Liberty (Viewpoint)",
+  address: "Liberty Island, New York Harbor",
+  group: "Downtown",
+  neighborhood: "Financial District",
+  keywords: ["statue of liberty", "liberty island", "harbor view"],
+  quickFacts: [
+    "Iconic national monument located on Liberty Island.",
+    "Often viewed from Battery Park during walking tours.",
+    "Symbol of freedom and immigration."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: Where is the Statue of Liberty located?",
+      a: "On Liberty Island in New York Harbor."
+    },
+    {
+      q: "Exam-style: From where do most tours view or access the statue?",
+      a: "From Battery Park in Lower Manhattan."
+    },
+    {
+      q: "Exam-style: Why is it commonly discussed even when not visited?",
+      a: "Because it is one of the most recognizable symbols of the United States."
+    }
+  ]
+},
+{
+  id: "wall_street",
+  name: "Wall Street",
+  address: "Wall Street, New York, NY 10005",
+  group: "Downtown",
+  neighborhood: "Financial District",
+  keywords: ["wall street", "finance", "nyse", "fidi"],
+  quickFacts: [
+    "Historic street at the heart of the Financial District.",
+    "Associated with global finance and economic institutions.",
+    "High-security and high-traffic area."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is Wall Street associated with?",
+      a: "Global finance and major financial institutions."
+    },
+    {
+      q: "Exam-style: Why should guides be cautious when stopping here?",
+      a: "Due to security concerns and heavy pedestrian traffic."
+    },
+    {
+      q: "Exam-style: Name one landmark commonly discussed here.",
+      a: "The New York Stock Exchange."
+    }
+  ]
+},
+{
+  id: "city_hall_park",
+  name: "City Hall Park",
+  address: "City Hall Park, New York, NY 10007",
+  group: "Downtown",
+  neighborhood: "Financial District",
+  keywords: ["city hall", "government", "park", "courthouse"],
+  quickFacts: [
+    "Public park surrounding New York City Hall.",
+    "Useful stop for discussing NYC government and civic history.",
+    "Open space near courthouses and civic buildings."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is City Hall Park used for?",
+      a: "Public space near NYC government buildings."
+    },
+    {
+      q: "Exam-style: Why is it useful on walking tours?",
+      a: "It offers open space and civic context."
+    },
+    {
+      q: "Exam-style: What should guides be mindful of here?",
+      a: "Security and active government operations nearby."
+    }
+  ]
+},
+{
+  id: "soho",
+  name: "SoHo Cast-Iron Historic District",
+  address: "SoHo, New York, NY 10012",
+  group: "Downtown",
+  neighborhood: "East Village",
+  keywords: ["soho", "cast iron", "shopping", "historic district"],
+  quickFacts: [
+    "Known for cast-iron buildings and shopping streets.",
+    "Popular neighborhood for architecture and retail.",
+    "Busy sidewalks require careful group control."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is SoHo known for?",
+      a: "Cast-iron architecture and shopping streets."
+    },
+    {
+      q: "Exam-style: Why is SoHo popular with visitors?",
+      a: "Its historic architecture and retail scene."
+    },
+    {
+      q: "Exam-style: What is a guiding challenge in SoHo?",
+      a: "Narrow sidewalks and heavy foot traffic."
+    }
+  ]
+},
+{
+  id: "little_italy",
+  name: "Little Italy",
+  address: "Mulberry St, New York, NY 10013",
+  group: "Downtown",
+  neighborhood: "East Village",
+  keywords: ["little italy", "mulberry street", "italian heritage"],
+  quickFacts: [
+    "Historic neighborhood known for Italian-American heritage.",
+    "Common stop for food and cultural discussions.",
+    "Often paired with Chinatown tours."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is Little Italy known for?",
+      a: "Italian-American history, restaurants, and cultural heritage."
+    },
+    {
+      q: "Exam-style: What nearby neighborhood is often paired with it?",
+      a: "Chinatown."
+    },
+    {
+      q: "Exam-style: What guiding tip applies here?",
+      a: "Avoid blocking narrow sidewalks and restaurant entrances."
+    }
+  ]
+},
+{
+  id: "chinatown",
+  name: "Chinatown",
+  address: "Chinatown, New York, NY 10013",
+  group: "Downtown",
+  neighborhood: "East Village",
+  keywords: ["chinatown", "culture", "food", "downtown"],
+  quickFacts: [
+    "One of the largest Chinatown neighborhoods in the U.S.",
+    "Known for food, markets, and cultural landmarks.",
+    "High pedestrian density requires strong group awareness."
+  ],
+  examQA: [
+    {
+      q: "Exam-style: What is Chinatown known for?",
+      a: "Cultural landmarks, food markets, and vibrant street life."
+    },
+    {
+      q: "Exam-style: Why is Chinatown a popular tour stop?",
+      a: "It offers strong cultural contrast and history."
+    },
+    {
+      q: "Exam-style: What is an important guiding consideration here?",
+      a: "Managing group size and respecting local businesses."
+    }
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+
 ];
+
 
 // ---------------- Utilities ----------------
 const $ = (id) => document.getElementById(id);
@@ -292,7 +1208,8 @@ function getFilteredLandmarks(){
       lm.name, lm.address, lm.group, lm.neighborhood,
       (lm.keywords||[]).join(" "),
       (lm.quickFacts||[]).join(" "),
-      (lm.examQA||[]).map(x=>x.q+" "+x.a).join(" ")
+      (lm.examQA||[]).map(x=>x.q+" "+x.a).join(" "),
+      (COMMON_EXAM_QA||[]).map(x=>x.q+" "+x.a).join(" ")
     ].join(" "));
     return hay.includes(q);
   }).sort((a,b)=>a.name.localeCompare(b.name));
@@ -309,13 +1226,14 @@ function renderLandmarkList(){
 
   lmListEl.innerHTML = items.map(lm => {
     const selected = lm.id === currentLandmarkId;
+    const totalQs = (lm.examQA?.length || 0) + (COMMON_EXAM_QA?.length || 0);
     return `
       <button class="lmBtn" data-id="${escapeHtml(lm.id)}" style="${selected ? 'border-color: rgba(0,212,255,.55);' : ''}">
         <div>
           <div class="lmTitle">${escapeHtml(lm.name)}</div>
           <div class="lmMeta">${escapeHtml(lm.group)} → ${escapeHtml(lm.neighborhood)}<br>${escapeHtml(lm.address)}</div>
         </div>
-        <span class="badge">${lm.examQA?.length || 0} Qs</span>
+        <span class="badge">${totalQs} Qs</span>
       </button>
     `;
   }).join("");
@@ -334,6 +1252,9 @@ function openLandmark(id){
 
   const mapsQuery = encodeURIComponent(`${lm.name} ${lm.address}`);
   const mapsLink = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
+  // Combine landmark-specific Qs + common exam Qs
+  const combinedQA = [...(lm.examQA || []), ...(COMMON_EXAM_QA || [])];
 
   rightPane.innerHTML = `
     <div>
@@ -357,7 +1278,7 @@ function openLandmark(id){
       </div>
 
       <div class="sectionTitle">Exam-Style Questions</div>
-      ${(lm.examQA||[]).map((qa, idx) => `
+      ${combinedQA.map((qa, idx) => `
         <div class="qCard" style="margin-top:10px">
           <div class="qRow">
             <div class="qPrompt"><strong>Q${idx+1}:</strong> ${escapeHtml(qa.q)}</div>
@@ -398,20 +1319,25 @@ function openLandmark(id){
 }
 
 // ---------------- Quiz mode ----------------
-let quizOn = false;
-
 function buildQuizPool(filteredLandmarks){
   const pool = [];
   filteredLandmarks.forEach(lm => {
-    (lm.examQA || []).forEach((qa, idx) => {
-      pool.push({ lmId: lm.id, lmName: lm.name, group: lm.group, neighborhood: lm.neighborhood, q: qa.q, a: qa.a });
+    const combinedQA = [...(lm.examQA || []), ...(COMMON_EXAM_QA || [])];
+    combinedQA.forEach((qa) => {
+      pool.push({
+        lmId: lm.id,
+        lmName: lm.name,
+        group: lm.group,
+        neighborhood: lm.neighborhood,
+        q: qa.q,
+        a: qa.a
+      });
     });
   });
   return pool;
 }
 
 function showQuiz(){
-  quizOn = true;
   const filtered = getFilteredLandmarks();
   const pool = buildQuizPool(filtered);
 
